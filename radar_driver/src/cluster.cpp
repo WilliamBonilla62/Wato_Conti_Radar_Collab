@@ -1,5 +1,5 @@
 #include <cluster.h>
-
+#include <ros/ros.h> 
 #include <algorithm>
 
 namespace dbscan {
