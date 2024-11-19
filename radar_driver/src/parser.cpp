@@ -160,6 +160,27 @@ void publishRDIPacket(RDIPacket_t * packet) {
     radar_driver::RadarPacket msg;
     loadPacketMsg(packet, &msg);
     printf("Publishing new message: %d\n", packet->payloadHeaderData.DetectionsInPacket);
+    // Save the message to a file
+    std::ofstream outfile("radar_packet_data.bin", std::ios::binary);
+    
+    if (!outfile) {
+        ROS_ERROR("Failed to open file for writing.");
+        return;
+    }
+    
+    // Serialize the message (in this case, writing the raw bytes to a file)
+    // The message can be serialized with a specialized ROS method (e.g., serialize() method)
+    size_t msg_size = msg.size(); // Get the size of the message
+    char* buffer = new char[msg_size];
+    msg.serialize(buffer, msg_size); // Serialize message into the buffer
+
+    // Write the buffer to the file
+    outfile.write(buffer, msg_size);
+    
+    // Clean up
+    delete[] buffer;
+    outfile.close();
+    
     unfilteredPublisher.publish(msg);
 }
 
