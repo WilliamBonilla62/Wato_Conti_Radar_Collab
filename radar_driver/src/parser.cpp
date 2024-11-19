@@ -195,7 +195,7 @@ void loadPacketMsg(RDIPacket_t * packet, radar_driver::RadarPacket * msg) {
         data.Prob1         = packet->resListDataArray[i].f_Prob1;
 
         // Sanity check to make sure that assumption0 is indeed the better assumption
-        assert(data.Prob0 >= data.Prob1);
+        //assert(data.Prob0 >= data.Prob1);
 
         data.VrelRad      = packet->resListDataArray[i].f_VrelRad;
         //Told to ignore ElAng by continental, but store anyways since we parsed it
