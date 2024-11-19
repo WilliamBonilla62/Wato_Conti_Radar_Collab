@@ -2,13 +2,13 @@
 <!-- Radar Notes are 0 - indexed -->
 <launch>
     <arg name="name" default="radar"/>
-    <arg name="iface"/>
-    <arg name="port"/>
+    <arg name="iface" default="enx5c28868515e9"/>
+    <arg name="port" default="31122"/>
     <!-- Berklee filter string, can be used, not necessary -->
     <arg name="filter" default=""/>
     <arg name="capture" default = "1"/>
     <!-- Capture path (cpath) to pcap file only required if running offline -->
-    <arg name="cpath" default = "/home/saeejithn/wato/ws_embedded/offline/radarCap5.pcap"/>
+    <arg name="cpath" default = "radarCap5.pcap"/>
     <arg name="scanMode" default="0"/>
     <arg name="uTopic" default="unfiltered_radar_packet"/>
     <group ns="$(arg name)">
