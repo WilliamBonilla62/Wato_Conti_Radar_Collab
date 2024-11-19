@@ -159,8 +159,37 @@ uint8_t parse_packet(udphdr_t* udphdr, unsigned char* packetptr) {
 void publishRDIPacket(RDIPacket_t * packet) {
     radar_driver::RadarPacket msg;
     loadPacketMsg(packet, &msg);
-    printf("Publishing new message: %d\n", packet->payloadHeaderData.DetectionsInPacket);    
-    unfilteredPublisher.publish(msg);
+    printf("Publishing new message: %d\n", packet->payloadHeaderData.DetectionsInPacket); 
+        // Print the payload header data
+    printf("Publishing new message: %d\n", packet->payloadHeaderData.DetectionsInPacket);
+    printf("EventID: %d\n", packet->payloadHeaderData.EventID);
+    printf("CRC: %d\n", packet->payloadHeaderData.CRC);
+    printf("Len: %d\n", packet->payloadHeaderData.Len);
+    printf("SQC: %d\n", packet->payloadHeaderData.SQC);
+    printf("MessageCounter: %d\n", packet->payloadHeaderData.MessageCounter);
+    printf("UTCTimeStamp: %llu\n", packet->payloadHeaderData.UTCTimeStamp);
+    printf("TimeStamp: %d\n", packet->payloadHeaderData.TimeStamp);
+    printf("MeasurementCounter: %d\n", packet->payloadHeaderData.MeasurementCounter);
+    printf("CycleCounter: %d\n", packet->payloadHeaderData.CycleCounter);
+    printf("NofDetections: %d\n", packet->payloadHeaderData.NofDetections);
+    printf("VambigRaw: %d\n", packet->payloadHeaderData.VambigRaw);
+    printf("CenterFrequencyRaw: %d\n", packet->payloadHeaderData.CenterFrequencyRaw);
+    printf("RadarPortNum: %d\n", packet->payloadHeaderData.RadarPortNum);
+    printf("DetectionsInPacket: %d\n", packet->payloadHeaderData.DetectionsInPacket);
+    printf("Vambig: %.3f\n", packet->payloadHeaderData.Vambig);
+    printf("CenterFrequency: %.3f\n", packet->payloadHeaderData.CenterFrequency);
+
+    // Print the data from the listDataArray (assuming it has a length of RDI_ARRAY_LEN)
+    for (int i = 0; i < RDI_ARRAY_LEN; i++) {
+        printf("Detection %d: Range = %.2f, VrelRad = %.2f, AzAng0 = %.2f, AzAng1 = %.2f, ElAng = %.2f\n",
+               i,
+               packet->resListDataArray[i].f_Range,
+               packet->resListDataArray[i].f_VrelRad,
+               packet->resListDataArray[i].f_AzAng0,
+               packet->resListDataArray[i].f_AzAng1,
+               packet->resListDataArray[i].f_ElAng);
+    }
+    //unfilteredPublisher.publish(msg);
 }
 
 void loadPacketMsg(RDIPacket_t * packet, radar_driver::RadarPacket * msg) {
